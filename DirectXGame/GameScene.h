@@ -15,6 +15,8 @@ public:
 	void Update();
 	void Draw();
 
+	void ParticleBorn(Vector3 pos);
+
 private:
 	Model* modelParticle_ = nullptr;
 
