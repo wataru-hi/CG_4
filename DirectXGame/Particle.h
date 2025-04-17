@@ -14,5 +14,8 @@ private:
 	WorldTransform worldTransform_;
 	Model* model_;
 
+	ObjectColor objectColor_;
+	Vector4 color_;
+
 };
 
