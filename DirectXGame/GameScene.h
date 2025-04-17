@@ -20,6 +20,6 @@ private:
 
 	Camera camera_;
 
-	Particle* particle_;
+	std::list<std::shared_ptr<Particle>> particles_;
 };
 
