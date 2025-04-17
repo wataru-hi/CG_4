@@ -1,14 +1,14 @@
 #pragma once
 #include <KamataEngine.h>
 
-using namespace KamataEngine;
+
 
 class Particle
 {
 public:
-	void Initialize(Model* model, Vector3 pos, Vector3 velocity);
+	void Initialize(KamataEngine::Model* model, KamataEngine::Vector3 pos, KamataEngine::Vector3 velocity);
 	void Update();
-	void Draw(Camera& camera);
+	void Draw(KamataEngine::Camera& camera);
 
 	bool IsFinished()
 	{
@@ -16,13 +16,13 @@ public:
 	}
 
 private:
-	WorldTransform worldTransform_;
-	Model* model_;
+	KamataEngine::WorldTransform worldTransform_;
+	KamataEngine::Model* model_;
 
-	ObjectColor objectColor_;
-	Vector4 color_;
+	KamataEngine::ObjectColor objectColor_;
+	KamataEngine::Vector4 color_;
 
-	Vector3 velocity_;
+	KamataEngine::Vector3 velocity_;
 
 	bool isFinished_ = false;
 	float counter_ = 0.0f;
