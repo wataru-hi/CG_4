@@ -2,7 +2,9 @@
 
 void GameScene::Initialize()
 {
-	efectModel = Model::cre
+	efectTextureHandle_ = TextureManager::Load("white1x1.png");
+
+	efectSprite_ = Sprite::Create(efectTextureHandle_, {1,1});
 }
 
 void GameScene::Update()
@@ -11,4 +13,7 @@ void GameScene::Update()
 
 void GameScene::Draw()
 {
+
+	Model::PreDraw()
+
 }

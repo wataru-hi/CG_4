@@ -11,6 +11,8 @@ public:
 	void Draw();
 
 private:
-	Model* efectModel = nullptr;
+	uint32_t efectTextureHandle_ = 0;
+
+	Sprite* efectSprite_ = nullptr;
 };
 
