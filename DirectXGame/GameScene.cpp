@@ -12,17 +12,24 @@ std::uniform_real_distribution<float> radianFromZero(0, 2.0f * PI);
 std::uniform_real_distribution<float> radianFromMinus2pi(-2.0f * PI, 2.0f * PI);
 
 GameScene::~GameScene() {
-	delete modelEfect_;
 }
 
 void GameScene::Initialize() {
 	srand((unsigned)time(NULL));
 	
-	modelEfect_ = Model::CreateFromOBJ("board");
+	modelEfect = Model::CreateFromOBJ("board");
 
-	worldTransform.Initialize();
+	for (int i = 0; i < 100; i++)
+	{
+		std::shared_ptr<Efect> newEfect;
 
-	worldTransform.scale_.y = randomEngine(radianFromZero)
+
+	}
+
+	
+
+	worldTransform.scale_.y = radianFromZero(randomEngine);
+	worldTransform.rotation_.z = radianFromMinus2pi(randomEngine);
 
 	camera_.Initialize();
 

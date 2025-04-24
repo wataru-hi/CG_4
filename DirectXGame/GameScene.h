@@ -1,5 +1,6 @@
 #pragma once
 #include "KamataEngine.h"
+#include "Efect.h"
 
 class GameScene
 {
@@ -12,9 +13,9 @@ public:
 	void Draw();
 
 private:
-	KamataEngine::Model* modelEfect_ = nullptr;
+	KamataEngine::Model* modelEfect;
 
-	KamataEngine::WorldTransform worldTransform;
+	std::list<std::shared_ptr<Efect>> Efects;
 
 	KamataEngine::Camera camera_;
 };
