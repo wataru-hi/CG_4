@@ -2,7 +2,7 @@
 
 void GameScene::Initialize()
 {
-	efectTextureHandle_ = TextureManager::Load("white1x1.png");
+	efectTextureHandle_ = TextureManager::Load("uvChecker.png");
 
 	efectSprite_ = Sprite::Create(efectTextureHandle_, {1,1});
 }
@@ -15,6 +15,10 @@ void GameScene::Draw()
 {
 	DirectXCommon* dxCommon = DirectXCommon::GetInstance();
 
-	Sprite
+	Sprite::PreDraw(dxCommon->GetCommandList());
+
+	efectSprite_->Draw();
+
+	Sprite::PostDraw();
 
 }
