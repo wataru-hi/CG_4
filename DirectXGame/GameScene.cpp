@@ -13,7 +13,8 @@ void GameScene::Update()
 
 void GameScene::Draw()
 {
+	DirectXCommon* dxCommon = DirectXCommon::GetInstance();
 
-	Model::PreDraw()
+	Sprite
 
 }
