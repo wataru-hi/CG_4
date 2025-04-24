@@ -2,6 +2,7 @@
 
 void GameScene::Initialize()
 {
+	efectModel = Model::cre
 }
 
 void GameScene::Update()
