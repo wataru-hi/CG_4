@@ -16,6 +16,8 @@ int WINAPI WinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPSTR, _In_ int) {
 	GameScene* gameScene = new GameScene();
 	gameScene->Initialize();
 
+	ImGuiManager* imGuiManager = ImGuiManager::GetInstance();
+
 	while (true)
 	{
 		if (KamataEngine::Update())
@@ -23,11 +25,17 @@ int WINAPI WinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPSTR, _In_ int) {
 			break;
 		}
 
-		gameScene->Update();
+		imGuiManager->Begin();
 
+		gameScene->Update();
+		
+		imGuiManager->End();
+		
 		dxCommon->PreDraw();
 
 		gameScene->Draw();
+
+		imGuiManager->Draw();
 
 		dxCommon->PostDraw();
 	}

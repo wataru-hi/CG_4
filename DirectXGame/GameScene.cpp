@@ -5,39 +5,30 @@
 using namespace KamataEngine;
 using namespace MathUtility;
 
-std::random_device seedGenerator;
-std::mt19937 randomEngine(seedGenerator());
-std::uniform_real_distribution<float> distridution(-1.0f, 1.0f);
-
 GameScene::~GameScene() {
-	delete modelParticle_;
-	// particles_のクリア
-	particles_.clear();
+	delete modelEfect_;
 }
 
 void GameScene::Initialize() {
-	modelParticle_ = Model::CreateSphere(4, 4);
+	modelEfect_ = Model::CreateFromOBJ("board");
+
+	worldTransform.Initialize();
 
 	camera_.Initialize();
 
-	srand((unsigned)time(NULL));
+	//srand((unsigned)time(NULL));
 	
 }
 
 void GameScene::Update() {
-	if(rand() % 20 == 0)
-	{
-		Vector3 position = { distridution(randomEngine) * 30.0f, distridution(randomEngine) * 20.0f, 0 };
+	
+	ImGui::Begin("board");
+	ImGui::DragFloat3("rot", &worldTransform.rotation_.x, 0.1f);
+	ImGui::DragFloat3("sca", &worldTransform.scale_.x, 0.1f);
+	ImGui::DragFloat3("pos", &worldTransform.translation_.x, 0.1f);
+	ImGui::End();
 
-		ParticleBorn(position);
-	}
-
-	particles_.remove_if([](std::shared_ptr<Particle> particle_ptr) { return particle_ptr->IsFinished(); });
-
-	for (auto& particle : particles_) {
-		particle->Update();
-	}
-
+	worldTransform.UpdateMatirx();
 	
 }
 
@@ -46,27 +37,9 @@ void GameScene::Draw() {
 
 	Model::PreDraw(dxCommon->GetCommandList());
 
-	for (auto& particle : particles_) {
-		particle->Draw(camera_);
-	}
+	modelEfect_->Draw(worldTransform, camera_);
+	
 
 	Model::PostDraw();
 }
 
-void GameScene::ParticleBorn(Vector3 pos)
-{
-		Vector3 position = pos;
-
-	for (int i = 0; i < 150; i++) {
-		std::shared_ptr<Particle> particle = std::make_shared<Particle>();
-
-		Vector3 velocity = {distridution(randomEngine), distridution(randomEngine), 0};
-
-		Normalize(velocity);
-		velocity *= distridution(randomEngine);
-		velocity *= 0.1f;
-
-		particle->Initialize(modelParticle_, position, velocity);
-		particles_.push_back(particle);
-	}
-}

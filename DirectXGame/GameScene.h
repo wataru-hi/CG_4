@@ -1,10 +1,6 @@
 #pragma once
 #include "KamataEngine.h"
 
-#include "Particle.h"
-
-
-
 class GameScene
 {
 public:
@@ -15,13 +11,11 @@ public:
 	void Update();
 	void Draw();
 
-	void ParticleBorn(KamataEngine::Vector3 pos);
-
 private:
-	KamataEngine::Model* modelParticle_ = nullptr;
+	KamataEngine::Model* modelEfect_ = nullptr;
+
+	KamataEngine::WorldTransform worldTransform;
 
 	KamataEngine::Camera camera_;
-
-	std::list<std::shared_ptr<Particle>> particles_;
 };
 
