@@ -5,6 +5,10 @@
 using namespace KamataEngine;
 using namespace MathUtility;
 
+std::random_device seedGenerator;
+std::mt19937 randomEngine(seedGenerator());
+std::uniform_real_distribution<float> distridution(-1.0f, 1.0f);
+
 GameScene::~GameScene() {
 	delete modelEfect_;
 }
