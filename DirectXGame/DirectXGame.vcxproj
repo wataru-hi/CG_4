@@ -191,6 +191,7 @@
     <ClInclude Include="Efect.h" />
     <ClInclude Include="GameScene.h" />
     <ClInclude Include="Particle.h" />
+    <ClInclude Include="RandomUtility.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

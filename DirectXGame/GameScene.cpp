@@ -1,14 +1,11 @@
 #include "gameScene.h"
-
+#include "RandomUtility.h"
 #include <random>
 
 using namespace KamataEngine;
 using namespace MathUtility;
 
-std::random_device seedGenerator;
-std::mt19937 randomEngine(seedGenerator());
-//std::uniform_real_distribution<float> distridution(-1.0f, 1.0f);
-std::uniform_real_distribution<float> distridutionZero(0.0f, 1.0f);
+using namespace RandomUtility;
 
 GameScene::~GameScene() {
 }
@@ -23,7 +20,7 @@ void GameScene::Initialize() {
 
 void GameScene::Update() {
 
-	if (distridutionZero(randomEngine) * 100.0f <= 20.0f)
+	if (GetRandomZeroToOne() * 100.0f <= 20.0f)
 	{
 		EfectBorn();
 	}
@@ -35,7 +32,6 @@ void GameScene::Update() {
 
 	efects_.remove_if([](std::shared_ptr<Efect> particle_ptr) { return particle_ptr->IsFinished(); });
 
-	
 }
 
 void GameScene::Draw() {
@@ -53,14 +49,19 @@ void GameScene::Draw() {
 }
 
 void GameScene::EfectBorn() {
+	Vector2 newPos = {GetRandom() * 30.0f, GetRandomZeroToOne() * 20.0f}; 
+	Vector3 color = {GetRandomZeroToOne(), GetRandomZeroToOne(), GetRandomZeroToOne()}; 
 	for (int i = 0; i < 10; i++) {
 		std::shared_ptr<Efect> newEfect = std::make_shared<Efect>();
 
-		Vector3 sca = Vector3{0.2f, distridutionZero(randomEngine) * 2.5f, 1.0f};
-		Vector3 rot = Vector3{0.0f, 0.0f, distridutionZero(randomEngine) * 6.28f};
-		Vector3 pos = Vector3Zero();
+		Vector3 sca = Vector3{0.2f, GetRandomZeroToOne() * 2.5f, 1.0f};
+		Vector3 rot = Vector3{0.0f, 0.0f, GetRandomZeroToOne() * 6.28f};
+		Vector3 pos = Vector3{newPos.x, newPos.y, 0.0f};
 
 		newEfect->Initialize(modelEfect, rot, sca, pos);
+
+		newEfect->SetColor(color);
+		newEfect->SetMove(Vector3{0.1f, -0.5f, 0.0f});
 
 		efects_.push_back(newEfect);
 	}
