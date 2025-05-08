@@ -18,23 +18,12 @@ void GameScene::Initialize() {
 	
 	modelEfect = Model::CreateFromOBJ("board");
 
-	for (int i = 0; i < 10; i++)
-	{
-		std::shared_ptr<Efect> newEfect = std::make_shared<Efect>();
-
-		Vector3 sca = Vector3{0.2f, distridutionZero(randomEngine) * 2.5f, 1.0f};
-		Vector3 rot = Vector3{0.0f, 0.0f, distridutionZero(randomEngine) * 6.28f};
-		Vector3 pos = Vector3Zero();
-
-		newEfect->Initialize(modelEfect, rot, sca, pos);
-
-		efects_.push_back(newEfect);
-	}
-
 	camera_.Initialize();
 }
 
 void GameScene::Update() {
+
+
 	for(auto& efect : efects_)
 	{
 		efect->Update();
@@ -57,5 +46,19 @@ void GameScene::Draw() {
 	
 
 	Model::PostDraw();
+}
+
+void GameScene::EfectBorn() {
+	for (int i = 0; i < 10; i++) {
+		std::shared_ptr<Efect> newEfect = std::make_shared<Efect>();
+
+		Vector3 sca = Vector3{0.2f, distridutionZero(randomEngine) * 2.5f, 1.0f};
+		Vector3 rot = Vector3{0.0f, 0.0f, distridutionZero(randomEngine) * 6.28f};
+		Vector3 pos = Vector3Zero();
+
+		newEfect->Initialize(modelEfect, rot, sca, pos);
+
+		efects_.push_back(newEfect);
+	}
 }
 

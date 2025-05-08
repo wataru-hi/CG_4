@@ -14,8 +14,9 @@ public:
 	void Update();
 	void Draw();
 
+	void EfectBorn();
+
 private:
-	void CreateEfect();
 
 	KamataEngine::Model* modelEfect;
 
