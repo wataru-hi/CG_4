@@ -17,7 +17,7 @@ public:
 private:
 	KamataEngine::Model* modelEfect;
 
-	std::vector<std::unique_ptr<Efect>> efects_;
+	std::list<std::shared_ptr<Efect>> efects_;
 
 	KamataEngine::Camera camera_;
 };
