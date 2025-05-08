@@ -17,7 +17,20 @@ void Efect::Initialize(Model* model, Vector3 rot, Vector3 sca, Vector3 pos)
 
 void Efect::Update()
 {	
+	if (isFinished_)
+		return;
+
+	counter_ += 1.0f / 60.0f;
+
+	if (counter_ >= kDuration_)
+	{
+		counter_ = kDuration_;
+		isFinished_ = true;
+	}
+
 	worldTransform_.UpdateMatirx();
+
+	
 }
 
 void Efect::Draw(Camera& camera)
