@@ -16,7 +16,7 @@ void Efect::Initialize(Model* model, Vector3 rot, Vector3 sca, Vector3 pos)
 }
 
 void Efect::Update()
-{
+{	
 	worldTransform_.UpdateMatirx();
 }
 

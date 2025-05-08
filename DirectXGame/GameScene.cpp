@@ -19,36 +19,43 @@ void GameScene::Initialize() {
 	
 	modelEfect = Model::CreateFromOBJ("board");
 
-	for (int i = 0; i < 100; i++)
+	for (int i = 0; i < 10; i++)
 	{
-		std::shared_ptr<Efect> newEfect;
+		std::unique_ptr<Efect> newEfect = std::make_unique<Efect>();
 
+		Vector3 sca = Vector3{1.0f, 1.0f, 1.0f};
+		sca.y = distridution(randomEngine);
+		Vector3 rot = Vector3Zero();
+		rot.z = radianFromMinus2pi(randomEngine);
+		Vector3 pos = Vector3Zero();
+		pos.x = static_cast<float>(i);
 
+		newEfect->Initialize(modelEfect, rot, sca, pos);
+
+		efects_.push_back(newEfect);
 	}
 
-	
-
-	worldTransform.scale_.y = radianFromZero(randomEngine);
-	worldTransform.rotation_.z = radianFromMinus2pi(randomEngine);
-
 	camera_.Initialize();
-
-	
-	
 }
 
 void GameScene::Update() {
-	
+	for(auto& efect : efects_)
+	{
+		efect->Update();
+	}
+
+	// ImGuiでEfectのworldTransformを操作
+    ImGui::Begin("Efect Transform Editor");
+    for (size_t i = 0; i < efects_.size(); ++i) {
+		WorldTransform& transform = efects_[i]->GetWorldTransform();
 
 
-	ImGui::Begin("board");
-	ImGui::DragFloat3("rot", &worldTransform.rotation_.x, 0.1f);
-	ImGui::DragFloat3("sca", &worldTransform.scale_.x, 0.1f);
-	ImGui::DragFloat3("pos", &worldTransform.translation_.x, 0.1f);
-	ImGui::End();
-
-	worldTransform.UpdateMatirx();
-	
+        ImGui::Text("Efect %zu", i);
+        ImGui::DragFloat3("Scale", &transform.scale_.x, 0.1f);
+        ImGui::DragFloat3("Rotation", &transform.rotation_.x, 0.1f);
+        ImGui::DragFloat3("Translation", &transform.translation_.x, 0.1f);
+    }
+    ImGui::End();
 }
 
 void GameScene::Draw() {
@@ -56,7 +63,10 @@ void GameScene::Draw() {
 
 	Model::PreDraw(dxCommon->GetCommandList());
 
-	modelEfect_->Draw(worldTransform, camera_);
+	for(auto& efect : efects_)
+	{
+		efect->Draw(camera_);
+	}
 	
 
 	Model::PostDraw();

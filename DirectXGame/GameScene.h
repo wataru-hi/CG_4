@@ -2,6 +2,8 @@
 #include "KamataEngine.h"
 #include "Efect.h"
 
+#include <memory>
+
 class GameScene
 {
 public:
@@ -15,7 +17,7 @@ public:
 private:
 	KamataEngine::Model* modelEfect;
 
-	std::list<std::shared_ptr<Efect>> Efects;
+	std::vector<std::unique_ptr<Efect>> efects_;
 
 	KamataEngine::Camera camera_;
 };
