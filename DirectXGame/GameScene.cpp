@@ -23,6 +23,10 @@ void GameScene::Initialize() {
 
 void GameScene::Update() {
 
+	if (distridutionZero(randomEngine) * 100.0f <= 20.0f)
+	{
+		EfectBorn();
+	}
 
 	for(auto& efect : efects_)
 	{
