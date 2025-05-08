@@ -16,6 +16,11 @@ public:
 
 	void EfectBorn();
 
+	void GetEffect(std::shared_ptr<Efect> efect)
+	{ 
+		efects_.push_back(efect);
+	}
+
 private:
 
 	KamataEngine::Model* modelEfect;

@@ -62,6 +62,7 @@ void GameScene::EfectBorn() {
 
 		newEfect->SetColor(color);
 		newEfect->SetMove(Vector3{0.1f, -0.5f, 0.0f});
+		newEfect->SetGameScene(this);
 
 		efects_.push_back(newEfect);
 	}

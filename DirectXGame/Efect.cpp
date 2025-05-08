@@ -1,4 +1,5 @@
 #include "Efect.h"
+#include "GameScene.h"
 
 #include "RandomUtility.h"
 
@@ -41,9 +42,29 @@ void Efect::Update()
 		isFinished_ = true;
 	}
 
+	move_.y -= 0.01f;
+
 	worldTransform_.translation_ += move_;
 
-	move_.y += 0.005f;
+	if (GetRandomZeroToOne() < 0.002f)
+	{
+		Vector3 color = {1, 1, 0};
+		for (int i = 0; i < 3; i++) {
+			std::shared_ptr<Efect> newEfect = std::make_shared<Efect>();
+
+			Vector3 sca = Vector3{0.2f, GetRandomZeroToOne() * 1.5f, 1.0f};
+			Vector3 rot = Vector3{0.0f, 0.0f, GetRandomZeroToOne() * 6.28f};
+			Vector3 pos = worldTransform_.translation_;
+
+			newEfect->Initialize(model_, rot, sca, pos);
+
+			newEfect->SetColor(color);
+			newEfect->SetMove(Vector3{0.1f, -0.4f, 0.0f});
+			newEfect->SetGameScene(gameScene_);
+
+			gameScene_->GetEffect(newEfect);
+		}
+	}
 
 	worldTransform_.UpdateMatirx();
 
@@ -52,5 +73,6 @@ void Efect::Update()
 
 void Efect::Draw(Camera& camera)
 {
-	model_->Draw(worldTransform_, camera, &objectColor);
-}
+	model_->Draw(worldTransform_, camera, &objectColor); }
+
+void Efect::SetGameScene(GameScene* gameScene) { gameScene_ = gameScene; }

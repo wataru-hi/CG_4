@@ -1,6 +1,8 @@
 #pragma once
 #include "KamataEngine.h"
 
+class GameScene;
+
 class Efect
 {
 public:
@@ -11,12 +13,15 @@ public:
 	bool IsFinished() { return isFinished_; }
 	KamataEngine::WorldTransform& GetWorldTransform() { return worldTransform_; }
 
+	void SetGameScene(GameScene* gameScene);
+
 	void SetColor(KamataEngine::Vector3 color) { 
 		color_.x = color.x;  
 		color_.y = color.y;  
 		color_.z = color.z;  
 	}
 	void SetMove(KamataEngine::Vector3 move) { move_ = move; }
+	
 
 private:
 	KamataEngine::Model* model_;
@@ -31,5 +36,7 @@ private:
 	KamataEngine::Vector4 color_;
 
 	KamataEngine::Vector3 move_;
+
+	GameScene* gameScene_;
 };
 
