@@ -15,6 +15,8 @@ public:
 	void Draw();
 
 private:
+	void CreateEfect();
+
 	KamataEngine::Model* modelEfect;
 
 	std::list<std::shared_ptr<Efect>> efects_;

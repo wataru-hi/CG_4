@@ -22,5 +22,8 @@ private:
 	bool isFinished_ = false;
 	float counter_ = 0.0f;
 	const float kDuration_ = 1.0f;
+
+	KamataEngine::ObjectColor objectColor;
+	KamataEngine::Vector4 color;
 };
 

@@ -40,37 +40,8 @@ void GameScene::Update() {
 		efect->Update();
 	}
 
-	// ImGuiウィンドウを作成
-	if (ImGui::Begin("Efect Editor")) {
-		int index = 0; // Efectのインデックスを追跡するための変数
-		for (auto& efect : efects_) {
-			// 各Efectの編集用UIを作成
-			ImGui::PushID(index); // 複数の同名ウィジェットを区別するためのID
+	efects_.remove_if([](std::shared_ptr<Efect> particle_ptr) { return particle_ptr->IsFinished(); });
 
-			KamataEngine::WorldTransform& transform = efect->GetWorldTransform();
-
-			// 位置の編集
-			ImGui::Text("Efect %d", index);
-			ImGui::DragFloat3("Position", &transform.translation_.x, 0.1f);
-
-			// 回転の編集
-			ImGui::DragFloat3("Rotation", &transform.rotation_.x, 0.01f);
-
-			// スケールの編集
-			ImGui::DragFloat3("Scale", &transform.scale_.x, 0.1f);
-
-			// ワールド行列を更新
-			transform.UpdateMatirx();
-
-			ImGui::Separator(); // 区切り線
-			ImGui::PopID();
-
-			++index; // インデックスをインクリメント
-		}
-	}
-	ImGui::End();
-
-	efects_.remove_if([](parti))
 	
 }
 
