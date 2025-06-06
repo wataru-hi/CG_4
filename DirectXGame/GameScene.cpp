@@ -1,6 +1,5 @@
-#include "gameScene.h"
+#include "GameScene.h"
 #include "RandomUtility.h"
-#include <random>
 
 using namespace KamataEngine;
 using namespace MathUtility;
@@ -11,8 +10,6 @@ GameScene::~GameScene() {
 }
 
 void GameScene::Initialize() {
-	srand((unsigned)time(NULL));
-	
 	modelEfect = Model::CreateFromOBJ("board");
 
 	camera_.Initialize();
@@ -20,9 +17,15 @@ void GameScene::Initialize() {
 
 void GameScene::Update() {
 
-	if (GetRandomZeroToOne() * 100.0f <= 20.0f)
+	if (efectBottunTimer > 0.0f)
+		efectBottunTimer -= flameTime;
+
+	if (Input::GetInstance()->PushKey(DIK_SPACE))
 	{
-		EfectBorn();
+		if (efectBottunTimer <= 0.0f) {
+			EfectBorn();
+			efectBottunTimer = efectBottunTime;
+		}
 	}
 
 	for(auto& efect : efects_)
@@ -49,20 +52,21 @@ void GameScene::Draw() {
 }
 
 void GameScene::EfectBorn() {
-	Vector2 newPos = {GetRandom() * 30.0f, GetRandomZeroToOne() * 20.0f}; 
-	Vector3 color = {GetRandomZeroToOne(), GetRandomZeroToOne(), GetRandomZeroToOne()}; 
+	Vector2 newPos = {GetRandom() * 30.0f, GetRandom() * 20.0f}; 
+	Vector3 color = {GetRandomZeroToOne(), GetRandomZeroToOne(), GetRandomZeroToOne()};
+	float rotSpd = GetRandomZeroToOne();
 	for (int i = 0; i < 10; i++) {
 		std::shared_ptr<Efect> newEfect = std::make_shared<Efect>();
 
 		Vector3 sca = Vector3{0.2f, GetRandomZeroToOne() * 2.5f, 1.0f};
 		Vector3 rot = Vector3{0.0f, 0.0f, GetRandomZeroToOne() * 6.28f};
 		Vector3 pos = Vector3{newPos.x, newPos.y, 0.0f};
-
+		
 		newEfect->Initialize(modelEfect, rot, sca, pos);
 
 		newEfect->SetColor(color);
-		newEfect->SetMove(Vector3{0.1f, -0.5f, 0.0f});
 		newEfect->SetGameScene(this);
+		newEfect->SetRot(rotSpd);
 
 		efects_.push_back(newEfect);
 	}

@@ -11,7 +11,7 @@ using namespace RandomUtility;
 
 void Efect::Initialize(Model* model, Vector3 rot, Vector3 sca, Vector3 pos)
 {
-	assert(model);
+	//assert(model);
 
 	model_= model;
 
@@ -32,8 +32,12 @@ void Efect::Update()
 
 	counter_ += 1.0f / 60.0f;
 
-	color_.w = std::clamp(1.0f - counter_ / kDuration_, 0.0f, 1.0f);
-	
+	moveRot_ *= 0.95f;
+	worldTransform_.rotation_.z += moveRot_;
+
+	float t = counter_ / kDuration_;
+	color_.w = 1.0f - t; // 時間経過で透明に
+
 	objectColor.SetColor(color_);
 
 	if (counter_ >= kDuration_)
@@ -42,11 +46,7 @@ void Efect::Update()
 		isFinished_ = true;
 	}
 
-	move_.y -= 0.01f;
-
-	worldTransform_.translation_ += move_;
-
-	if (GetRandomZeroToOne() < 0.002f)
+	/*if (GetRandomZeroToOne() < 0.002f)
 	{
 		Vector3 color = {1, 1, 0};
 		for (int i = 0; i < 3; i++) {
@@ -64,9 +64,9 @@ void Efect::Update()
 
 			gameScene_->GetEffect(newEfect);
 		}
-	}
+	}*/
 
-	worldTransform_.UpdateMatirx();
+	worldTransform_.UpdateMatrix();
 
 	
 }

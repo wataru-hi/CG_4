@@ -20,7 +20,8 @@ public:
 		color_.y = color.y;  
 		color_.z = color.z;  
 	}
-	void SetMove(KamataEngine::Vector3 move) { move_ = move; }
+	void SetMove(KamataEngine::Vector3 move) { movePos_ = move; }
+	void SetRot(float moveRot) { moveRot_ = moveRot; }
 	
 
 private:
@@ -33,10 +34,12 @@ private:
 	const float kDuration_ = 1.0f;
 
 	KamataEngine::ObjectColor objectColor;
-	KamataEngine::Vector4 color_;
+	KamataEngine::Vector4 color_;	
 
-	KamataEngine::Vector3 move_;
+	KamataEngine::Vector3 movePos_;
+	float moveRot_;
 
 	GameScene* gameScene_;
 };
 
+	

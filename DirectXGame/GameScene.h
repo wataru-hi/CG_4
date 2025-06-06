@@ -28,5 +28,10 @@ private:
 	std::list<std::shared_ptr<Efect>> efects_;
 
 	KamataEngine::Camera camera_;
-};
 
+	static inline const float flameTime = 1.0f / 60.0f;
+
+	float efectBottunTimer;
+	static inline const float efectBottunTime = 0.1f;
+
+};

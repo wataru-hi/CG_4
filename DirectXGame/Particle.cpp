@@ -7,7 +7,7 @@ using namespace MathUtility;
 
 void Particle::Initialize(Model* model, Vector3 pos, Vector3 velocity)
 {
-	assert(model);
+	//assert(model);
 	model_ = model;
 
 	worldTransform_.Initialize();
@@ -37,7 +37,7 @@ void Particle::Update()
 
 	objectColor_.SetColor(color_);
 	
-	worldTransform_.UpdateMatirx();
+	worldTransform_.UpdateMatrix();
 }
 
 void Particle::Draw(Camera& camera)
