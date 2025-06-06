@@ -1,6 +1,5 @@
 #include "gameScene.h"
 #include "RandomUtility.h"
-#include <random>
 
 using namespace KamataEngine;
 using namespace MathUtility;
@@ -8,63 +7,39 @@ using namespace MathUtility;
 using namespace RandomUtility;
 
 GameScene::~GameScene() {
+	Model2::StaticFinalize();
 }
 
 void GameScene::Initialize() {
-	srand((unsigned)time(NULL));
-	
-	modelEfect = Model::CreateFromOBJ("board");
-
 	camera_.Initialize();
+
+	Model2::StaticInitialize();
+
+	model_ = std::unique_ptr<Model2>(Model2::CreateSqueare(5));
+	
+	Texturehandel_ = TextureManager::Load("uvChecker.png");
+
+	worldTransform.Initialize();
+	worldTransform.scale_ = {10.0f, 10.0f, 10.0f};
+
+	objectColor = std::make_unique<ObjectColor>();
+	objectColor->Initialize();
+
+	color = {1.0f, 1.0f, 1.0f, 1.0f};
+
+	objectColor->SetColor(color);
 }
 
-void GameScene::Update() {
-
-	if (GetRandomZeroToOne() * 100.0f <= 20.0f)
-	{
-		EfectBorn();
-	}
-
-	for(auto& efect : efects_)
-	{
-		efect->Update();
-	}
-
-	efects_.remove_if([](std::shared_ptr<Efect> particle_ptr) { return particle_ptr->IsFinished(); });
-
+void GameScene::Update() { 
+	UpdateMatirx(); 
 }
 
 void GameScene::Draw() {
 	DirectXCommon* dxCommon = DirectXCommon::GetInstance();
 
-	Model::PreDraw(dxCommon->GetCommandList());
+	Model2::PreDraw(dxCommon->GetCommandList());
 
-	for(auto& efect : efects_)
-	{
-		efect->Draw(camera_);
-	}
-	
+	model_->Draw(worldTransform, camera_, Texturehandel_);
 
-	Model::PostDraw();
+	Model2::PostDraw();
 }
-
-void GameScene::EfectBorn() {
-	Vector2 newPos = {GetRandom() * 30.0f, GetRandomZeroToOne() * 20.0f}; 
-	Vector3 color = {GetRandomZeroToOne(), GetRandomZeroToOne(), GetRandomZeroToOne()}; 
-	for (int i = 0; i < 10; i++) {
-		std::shared_ptr<Efect> newEfect = std::make_shared<Efect>();
-
-		Vector3 sca = Vector3{0.2f, GetRandomZeroToOne() * 2.5f, 1.0f};
-		Vector3 rot = Vector3{0.0f, 0.0f, GetRandomZeroToOne() * 6.28f};
-		Vector3 pos = Vector3{newPos.x, newPos.y, 0.0f};
-
-		newEfect->Initialize(modelEfect, rot, sca, pos);
-
-		newEfect->SetColor(color);
-		newEfect->SetMove(Vector3{0.1f, -0.5f, 0.0f});
-		newEfect->SetGameScene(this);
-
-		efects_.push_back(newEfect);
-	}
-}
-

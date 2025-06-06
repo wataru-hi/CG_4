@@ -11,7 +11,7 @@ using namespace RandomUtility;
 
 void Efect::Initialize(Model* model, Vector3 rot, Vector3 sca, Vector3 pos)
 {
-	assert(model);
+	//assert(model);
 
 	model_= model;
 
@@ -62,7 +62,7 @@ void Efect::Update()
 			newEfect->SetMove(Vector3{0.1f, -0.4f, 0.0f});
 			newEfect->SetGameScene(gameScene_);
 
-			gameScene_->GetEffect(newEfect);
+			//gameScene_->GetEffect(newEfect);
 		}
 	}
 
