@@ -15,12 +15,12 @@ void GameScene::Initialize() {
 
 	Model2::StaticInitialize();
 
-	model_ = std::unique_ptr<Model2>(Model2::CreateSqueare(5));
+	model_ = std::unique_ptr<Model2>(Model2::CreateRing(32));
 	
 	Texturehandel_ = TextureManager::Load("uvChecker.png");
 
 	worldTransform.Initialize();
-	worldTransform.scale_ = {10.0f, 10.0f, 10.0f};
+	worldTransform.scale_ = {5.0f, 5.0f, 1.0f};
 
 	objectColor = std::make_unique<ObjectColor>();
 	objectColor->Initialize();
@@ -31,7 +31,14 @@ void GameScene::Initialize() {
 }
 
 void GameScene::Update() { 
-	UpdateMatirx(); 
+
+	ImGui::Begin("a");
+	ImGui::DragFloat3("sca", &worldTransform.scale_.x, 0.01f);
+	ImGui::DragFloat3("rot", &worldTransform.rotation_.x, 0.01f);
+	ImGui::DragFloat3("tra", &worldTransform.translation_.x, 0.01f);
+	ImGui::End();
+
+	worldTransform.UpdateMatirx(); 
 }
 
 void GameScene::Draw() {
@@ -40,6 +47,6 @@ void GameScene::Draw() {
 	Model2::PreDraw(dxCommon->GetCommandList());
 
 	model_->Draw(worldTransform, camera_, Texturehandel_);
-
+	
 	Model2::PostDraw();
 }

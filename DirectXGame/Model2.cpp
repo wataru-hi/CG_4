@@ -147,32 +147,108 @@ Model2* Model2::CreateSqueare(int num) {
 
 	// 左下
 	vertices[0].pos = {0.0f, 1.0f, 0.0f};
-	vertices[0].uv = {0.0f, 1.0f};
+	vertices[0].uv = {0.0f, 0.0f};
 	vertices[0].normal = {0.0f, 0.0f, 1.0f};
+
 	// 左上
 	vertices[1].pos = {0.0f, 0.0f, 0.0f};
-	vertices[1].uv = {0.0f, 0.0f};
+	vertices[1].uv = {0.0f, 1.0f};
 	vertices[1].normal = {0.0f, 0.0f, 1.0f};
+
 	// 右下
 	vertices[2].pos = {1.0f * static_cast<float>(num), 1.0f, 0.0f};
-	vertices[2].uv = {1.0f, 1.0f};
+	vertices[2].uv = {1.0f * static_cast<float>(num), 0.0f};
 	vertices[2].normal = {0.0f, 0.0f, 1.0f};
+
 	// 右上
 	vertices[3].pos = {1.0f * static_cast<float>(num), 0.0f, 0.0f};
-	vertices[3].uv = {1.0f, 0.0f};
+	vertices[3].uv = {1.0f * static_cast<float>(num), 1.0f};
 	vertices[3].normal = {0.0f, 0.0f, 1.0f};
 
-	// インデックス（反時計回りに修正）
-	indices[0] = 1; // 左上
-	indices[1] = 0; // 左下
-	indices[2] = 2; // 右下
-	indices[3] = 2; // 右下
-	indices[4] = 3; // 右上
-	indices[5] = 1; // 左上
+	// インデックス
+	indices[0] = 1;
+	indices[1] = 0;
+	indices[2] = 2;
+	indices[3] = 2;
+	indices[4] = 3;
+	indices[5] = 1;
 
 	instance->InitializeFromVertices(vertices, indices);
 
 	return instance;
+}
+
+Model2* Model2::CreateRing(int num) {
+	// メモリ確保
+	Model2* instance = new Model2;
+	std::vector<Mesh::VertexPosNormalUv> vertices;
+	std::vector<uint32_t> indices;
+
+	if (num < 3)
+		num = 3;
+
+	int numSegments = num;
+	float outerRadius = 2.0f;
+	float innerRadius = 1.0f;
+	float height = 1.0f;
+
+	const uint32_t kNumVerticesPerSegment = 4;
+	const uint32_t kNumVertices = numSegments * kNumVerticesPerSegment;
+	const uint32_t kNumIndicesPerSegment = 6;
+	const uint32_t kNumIndices = numSegments * kNumIndicesPerSegment;
+
+	vertices.resize(kNumVertices);
+	indices.resize(kNumIndices);
+
+	float angleStep = 2.0f * static_cast<float>(3.14f) / static_cast<float>(numSegments);
+
+	for (int i = 0; i < numSegments; ++i) {
+		float angle0 = angleStep * i;
+		float angle1 = angleStep * (i + 1);
+
+		float outerX0 = outerRadius * std::cos(angle0);
+		float outerY0 = outerRadius * std::sin(angle0);
+		float outerX1 = outerRadius * std::cos(angle1);
+		float outerY1 = outerRadius * std::sin(angle1);
+
+		float innerX0 = innerRadius * std::cos(angle0);
+		float innerY0 = innerRadius * std::sin(angle0);
+		float innerX1 = innerRadius * std::cos(angle1);
+		float innerY1 = innerRadius * std::sin(angle1);
+
+		uint32_t v_base = i * kNumVerticesPerSegment;
+
+		vertices[v_base + 0].pos = {outerX0, outerY0, height / 2.0f};
+		vertices[v_base + 0].normal = {0.0f, 0.0f, 1.0f};
+		vertices[v_base + 0].uv = {0.0f, 1.0f};
+
+		vertices[v_base + 1].pos = {innerX0, innerY0, height / 2.0f};
+		vertices[v_base + 1].normal = {0.0f, 0.0f, 1.0f};
+		vertices[v_base + 1].uv = {0.0f, 0.0f};
+
+		vertices[v_base + 2].pos = {outerX1, outerY1, height / 2.0f};
+		vertices[v_base + 2].normal = {0.0f, 0.0f, 1.0f};
+		vertices[v_base + 2].uv = {1.0f, 1.0f};
+
+		vertices[v_base + 3].pos = {innerX1, innerY1, height / 2.0f};
+		vertices[v_base + 3].normal = {0.0f, 0.0f, 1.0f};
+		vertices[v_base + 3].uv = {1.0f, 0.0f};
+
+		uint32_t i_base = i * kNumIndicesPerSegment;
+
+		indices[i_base + 0] = v_base + 0;
+		indices[i_base + 1] = v_base + 1;
+		indices[i_base + 2] = v_base + 3;
+
+		indices[i_base + 3] = v_base + 0;
+		indices[i_base + 4] = v_base + 3;
+		indices[i_base + 5] = v_base + 2;
+	}
+
+	instance->InitializeFromVertices(vertices, indices);
+
+	return instance;
+
 }
 
 void Model2::PreDraw(ID3D12GraphicsCommandList* commandList) { ModelCommon2::GetInstance()->PreDraw(commandList); }
@@ -748,7 +824,7 @@ void ModelCommon2::InitializeGraphicsPipeline() {
 	    D3DCOMPILE_DEBUG | D3DCOMPILE_SKIP_OPTIMIZATION, // デバッグ用設定
 	    0, &psBlob, &errorBlob);
 	if (FAILED(result)) {
-		// errorBlobからエラー内容をstring型にコピー
+	// errorBlobからエラー内容をstring型にコピー
 		std::string errstr;
 		errstr.resize(errorBlob->GetBufferSize());
 

@@ -140,6 +140,8 @@ public: // 静的メンバ関数
 	
 	static Model2* CreateSqueare(int num);
 
+	static Model2* CreateRing(int num);
+
 
 	/// <summary>
 	/// 描画前処理
