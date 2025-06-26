@@ -15,7 +15,7 @@ void GameScene::Initialize() {
 
 	Model2::StaticInitialize();
 
-	model_ = std::unique_ptr<Model2>(Model2::CreateRing(32));
+	model_ = std::unique_ptr<Model2>(Model2::CreateSqueare(5));
 	
 	Texturehandel_ = TextureManager::Load("uvChecker.png");
 

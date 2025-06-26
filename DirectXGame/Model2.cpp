@@ -132,50 +132,50 @@ Model2* Model2::CreateSphere(uint32_t divisionVertial, uint32_t divisionHorizont
 }
 
 Model2* Model2::CreateSqueare(int num) {
-	// メモリ確保
-	Model2* instance = new Model2;
-	std::vector<Mesh::VertexPosNormalUv> vertices;
-	std::vector<uint32_t> indices;
+		// メモリ確保
+		Model2* instance = new Model2;
+		std::vector<Mesh::VertexPosNormalUv> vertices;
+		std::vector<uint32_t> indices;
 
-	// 頂点数
-	const uint32_t kNumVertices = 4;
-	// インデックス数
-	const uint32_t kNumIndices = 6;
+		// 頂点数
+		const uint32_t kNumVertices = 4;
+		// インデックス数
+		const uint32_t kNumIndices = 6;
 
-	vertices.resize(kNumVertices);
-	indices.resize(kNumIndices);
+		vertices.resize(kNumVertices);
+		indices.resize(kNumIndices);
 
-	// 左下
-	vertices[0].pos = {0.0f, 1.0f, 0.0f};
-	vertices[0].uv = {0.0f, 0.0f};
-	vertices[0].normal = {0.0f, 0.0f, 1.0f};
+		// 左下
+		vertices[0].pos = {0.0f, 1.0f, 0.0f};
+		vertices[0].uv = {0.0f, 0.0f};
+		vertices[0].normal = {0.0f, 0.0f, 1.0f};
 
-	// 左上
-	vertices[1].pos = {0.0f, 0.0f, 0.0f};
-	vertices[1].uv = {0.0f, 1.0f};
-	vertices[1].normal = {0.0f, 0.0f, 1.0f};
+		// 左上
+		vertices[1].pos = {0.0f, 0.0f, 0.0f};
+		vertices[1].uv = {0.0f, 1.0f};
+		vertices[1].normal = {0.0f, 0.0f, 1.0f};
 
-	// 右下
-	vertices[2].pos = {1.0f * static_cast<float>(num), 1.0f, 0.0f};
-	vertices[2].uv = {1.0f * static_cast<float>(num), 0.0f};
-	vertices[2].normal = {0.0f, 0.0f, 1.0f};
+		// 右下
+		vertices[2].pos = {1.0f * static_cast<float>(num), 1.0f, 0.0f};
+		vertices[2].uv = {1.0f * static_cast<float>(num), 0.0f};
+		vertices[2].normal = {0.0f, 0.0f, 1.0f};
 
-	// 右上
-	vertices[3].pos = {1.0f * static_cast<float>(num), 0.0f, 0.0f};
-	vertices[3].uv = {1.0f * static_cast<float>(num), 1.0f};
-	vertices[3].normal = {0.0f, 0.0f, 1.0f};
+		// 右上
+		vertices[3].pos = {1.0f * static_cast<float>(num), 0.0f, 0.0f};
+		vertices[3].uv = {1.0f * static_cast<float>(num), 1.0f};
+		vertices[3].normal = {0.0f, 0.0f, 1.0f};
 
-	// インデックス
-	indices[0] = 1;
-	indices[1] = 0;
-	indices[2] = 2;
-	indices[3] = 2;
-	indices[4] = 3;
-	indices[5] = 1;
+		// インデックス
+		indices[0] = 1;
+		indices[1] = 0;
+		indices[2] = 2;
+		indices[3] = 2;
+		indices[4] = 3;
+		indices[5] = 1;
 
-	instance->InitializeFromVertices(vertices, indices);
+		instance->InitializeFromVertices(vertices, indices);
 
-	return instance;
+		return instance;
 }
 
 Model2* Model2::CreateRing(int num) {
@@ -215,7 +215,7 @@ Model2* Model2::CreateRing(int num) {
 		float innerY0 = innerRadius * std::sin(angle0);
 		float innerX1 = innerRadius * std::cos(angle1);
 		float innerY1 = innerRadius * std::sin(angle1);
-
+	
 		uint32_t v_base = i * kNumVerticesPerSegment;
 
 		vertices[v_base + 0].pos = {outerX0, outerY0, height / 2.0f};
