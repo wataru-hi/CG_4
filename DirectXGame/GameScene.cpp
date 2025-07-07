@@ -1,5 +1,6 @@
 #include "gameScene.h"
 #include "RandomUtility.h"
+#include "TitleScene.h"
 
 using namespace KamataEngine;
 using namespace MathUtility;

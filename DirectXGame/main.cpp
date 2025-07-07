@@ -3,6 +3,9 @@
 #include "KamataEngine.h"
 
 #include "GameScene.h"
+#include "TitleScene.h"
+
+#include "SpriteManager/GlobalSpriteManger.h"
 
 using namespace KamataEngine;
 
@@ -13,8 +16,15 @@ int WINAPI WinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPSTR, _In_ int) {
 
 	DirectXCommon* dxCommon = DirectXCommon::GetInstance();
 
-	GameScene* gameScene = new GameScene();
+	//SpriteManager globalSpriteManager;
+
+	globalSpriteManager.CreateSprite("titleSprite", "title.png", Vector2{0.0f, 0.0f});
+
+	std::unique_ptr<GameScene> gameScene = std::make_unique<GameScene>();
 	gameScene->Initialize();
+	
+	std::unique_ptr<TitleScene> titleScene = std::make_unique<TitleScene>();
+	titleScene->Initialize();
 
 	ImGuiManager* imGuiManager = ImGuiManager::GetInstance();
 
@@ -27,20 +37,20 @@ int WINAPI WinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPSTR, _In_ int) {
 
 		imGuiManager->Begin();
 
-		gameScene->Update();
-		
+		//gameScene->Update();
+		titleScene->Update();
+
 		imGuiManager->End();
 		
 		dxCommon->PreDraw();
 
-		gameScene->Draw();
+		//gameScene->Draw();
+		titleScene->Draw();
 
 		imGuiManager->Draw();
 
 		dxCommon->PostDraw();
 	}
-
-	delete gameScene;
 
 	KamataEngine::Finalize();
 

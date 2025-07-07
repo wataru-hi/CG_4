@@ -111,6 +111,8 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Model2.cpp" />
     <ClCompile Include="Particle.cpp" />
+    <ClCompile Include="SpriteManager\SpriteManger.cpp" />
+    <ClCompile Include="TitleScene.cpp" />
     <ClCompile Include="WorldTranformEx.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -194,6 +196,9 @@
     <ClInclude Include="Model2.h" />
     <ClInclude Include="Particle.h" />
     <ClInclude Include="RandomUtility.h" />
+    <ClInclude Include="SpriteManager\GlobalSpriteManger.h" />
+    <ClInclude Include="SpriteManager\SpriteManger.h" />
+    <ClInclude Include="TitleScene.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
