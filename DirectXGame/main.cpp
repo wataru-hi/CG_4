@@ -16,10 +16,6 @@ int WINAPI WinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPSTR, _In_ int) {
 
 	DirectXCommon* dxCommon = DirectXCommon::GetInstance();
 
-	//SpriteManager globalSpriteManager;
-
-	globalSpriteManager.CreateSprite("titleSprite", "title.png", Vector2{0.0f, 0.0f});
-
 	std::unique_ptr<GameScene> gameScene = std::make_unique<GameScene>();
 	gameScene->Initialize();
 	
@@ -37,15 +33,19 @@ int WINAPI WinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPSTR, _In_ int) {
 
 		imGuiManager->Begin();
 
-		//gameScene->Update();
-		titleScene->Update();
+		if (titleScene->IsendTitleScene())
+			gameScene->Update();
+		else
+			titleScene->Update();
 
 		imGuiManager->End();
 		
 		dxCommon->PreDraw();
 
-		//gameScene->Draw();
-		titleScene->Draw();
+		if (titleScene->IsendTitleScene())
+			gameScene->Draw();
+		else
+			titleScene->Draw();
 
 		imGuiManager->Draw();
 

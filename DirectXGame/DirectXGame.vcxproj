@@ -111,6 +111,9 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Model2.cpp" />
     <ClCompile Include="Particle.cpp" />
+    <ClCompile Include="SpriteManager\GlobalSpriteManger.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="SpriteManager\SpriteManger.cpp" />
     <ClCompile Include="TitleScene.cpp" />
     <ClCompile Include="WorldTranformEx.cpp" />

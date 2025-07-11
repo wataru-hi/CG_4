@@ -2,4 +2,3 @@
 #include "SpriteManger.h"
 
 extern SpriteManager globalSpriteManager;
-SpriteManager globalSpriteManager;

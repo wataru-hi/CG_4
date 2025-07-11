@@ -5,7 +5,7 @@ using namespace KamataEngine;
 
 // デストラクタ
 // クラスが破棄されるときに、管理している全てのスプライトとテクスチャを解放します。
-inline SpriteManager::~SpriteManager() {
+SpriteManager::~SpriteManager() {
 	for (auto const& [id, sprite_info] : sprites_) {
 		if (sprite_info.sprite != nullptr) {
 			delete sprite_info.sprite; // スプライトオブジェクトを解放
@@ -18,15 +18,12 @@ inline SpriteManager::~SpriteManager() {
 }
 
 // 新しいスプライトを作成し、管理対象に追加します。
-// id: スプライトを一意に識別するための文字列ID
+// id: スプライトを一意に識別するための数値ID
 // filePath: ロードする画像ファイルのパス
 // initialPosition: スプライトの初期位置 (例: {0, 0})
 // 成功した場合true、同じIDのスプライトが既に存在する場合falseを返します。
-inline bool SpriteManager::CreateSprite(const std::string& id, const char* filePath, const Vector2 initialPosition) {
-	if (sprites_.count(id)) {
-		std::cerr << "Error: Sprite with ID '" << id << "' already exists. Cannot create." << std::endl;
-		return false;
-	}
+uint32_t SpriteManager::CreateSprite(const char* filePath, const Vector2 initialPosition) {
+	uint32_t id = nextSpriteId_++;
 
 	uint32_t textureHandle = TextureManager::Load(filePath);
 	Sprite* newSprite = Sprite::Create(textureHandle, initialPosition);
@@ -38,22 +35,17 @@ inline bool SpriteManager::CreateSprite(const std::string& id, const char* fileP
 	sprites_[id] = info;
 
 	std::cout << "SpriteManager: Created and added sprite '" << id << "'." << std::endl;
-	return true;
+	return id;
 }
 
 // 指定されたIDのスプライトを取得します。
 // スプライトが存在しない場合はnullptrを返します。
-inline Sprite* SpriteManager::GetSprite(const std::string& id) {
-	auto it = sprites_.find(id);
-	if (it != sprites_.end()) {
-		return it->second.sprite;
-	}
-	std::cerr << "Warning: Sprite with ID '" << id << "' not found. Returning nullptr." << std::endl;
-	return nullptr;
-}
+Sprite* SpriteManager::GetSprite(uint32_t id) {
+	
+	return sprites_[id].sprite; }
 
 // 指定されたIDのスプライトを描画します。
-inline void SpriteManager::DrawSprite(const std::string& id) {
+void SpriteManager::DrawSprite(uint32_t id) {
 	Sprite* sprite = GetSprite(id);
 	if (sprite != nullptr) {
 		sprite->Draw();
@@ -62,7 +54,7 @@ inline void SpriteManager::DrawSprite(const std::string& id) {
 
 // 指定されたIDのスプライトを管理対象から削除し、関連リソースを解放します。
 // 成功した場合true、スプライトが存在しない場合falseを返します。
-inline bool SpriteManager::RemoveSprite(const std::string& id) {
+bool SpriteManager::RemoveSprite(uint32_t id) {
 	auto it = sprites_.find(id);
 	if (it != sprites_.end()) {
 		if (it->second.sprite != nullptr) {
@@ -77,7 +69,7 @@ inline bool SpriteManager::RemoveSprite(const std::string& id) {
 	return false;
 }
 
-void SpriteManager::SetSpritePosition(const std::string& id, const Vector2 newPosition) {
+void SpriteManager::SetSpritePosition(uint32_t id, const Vector2 newPosition) {
 	Sprite* sprite = GetSprite(id);
 	if (sprite != nullptr) {
 		sprite->SetPosition(newPosition);
