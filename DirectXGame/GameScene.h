@@ -3,6 +3,8 @@
 #include "Model2.h"
 #include <numbers>
 
+class Player;
+
 class GameScene
 {
 public:
@@ -25,6 +27,9 @@ private:
 	std::unique_ptr<KamataEngine::ObjectColor> objectColor;
 
 	KamataEngine::Vector4 color;
+
+	Player* player;
+	std::unique_ptr<KamataEngine::Model> playerModel;
 
 	
 };

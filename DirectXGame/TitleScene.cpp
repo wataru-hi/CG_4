@@ -24,6 +24,7 @@ void TitleScene::Initialize() {
 
 	globalSpriteManager.SetSpritePosition(TitleSpriteId, titlePos);
 	globalSpriteManager.SetSpritePosition(TitleSpaceKeySpriteId, titleSpacePos);
+
 	globalSpriteManager.SetSpritePosition(TitleBGSubSpriteId, Vector2{1280, 0});
 }
 

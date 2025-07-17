@@ -111,6 +111,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Model2.cpp" />
     <ClCompile Include="Particle.cpp" />
+    <ClCompile Include="Player.cpp" />
     <ClCompile Include="SpriteManager\GlobalSpriteManger.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
     </ClCompile>
@@ -198,6 +199,7 @@
     <ClInclude Include="GameScene.h" />
     <ClInclude Include="Model2.h" />
     <ClInclude Include="Particle.h" />
+    <ClInclude Include="Player.h" />
     <ClInclude Include="RandomUtility.h" />
     <ClInclude Include="SpriteManager\GlobalSpriteManger.h" />
     <ClInclude Include="SpriteManager\SpriteManger.h" />
