@@ -56,7 +56,7 @@ void GameScene::Draw() {
 
 
 	Sprite::PreDraw(dxCommon->GetCommandList());
-	
+	player->SpriteDraw();
 	Sprite::PostDraw();
 
 	dxCommon->ClearDepthBuffer();
