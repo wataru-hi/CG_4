@@ -31,7 +31,7 @@ void Player::Initialize(KamataEngine::Model* model) {
 
 void Player::Update() {
 	Vector2 GreSpriteSce = globalSpriteManager.GetSprite(HpGageGreId)->GetSize();
-	GreSpriteSce.x -= 0.1f;
+	GreSpriteSce.x -= 1.0f;
 	globalSpriteManager.GetSprite(HpGageGreId)->SetSize(GreSpriteSce);
 
 	num++;

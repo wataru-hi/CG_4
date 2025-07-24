@@ -40,13 +40,16 @@ void GameScene::Initialize() {
 
 void GameScene::Update() { 
 
-
 	player->Update();
+
+#ifdef _DEBUG
 	ImGui::Begin("a");
 	ImGui::DragFloat3("sca", &worldTransform.scale_.x, 0.01f);
 	ImGui::DragFloat3("rot", &worldTransform.rotation_.x, 0.01f);
 	ImGui::DragFloat3("tra", &worldTransform.translation_.x, 0.01f);
 	ImGui::End();
+#endif
+
 
 	worldTransform.UpdateMatirx(); 
 }

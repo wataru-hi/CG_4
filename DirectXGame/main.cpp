@@ -24,6 +24,8 @@ int WINAPI WinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPSTR, _In_ int) {
 
 	ImGuiManager* imGuiManager = ImGuiManager::GetInstance();
 
+	bool isEndTitleScene = false;
+
 	while (true)
 	{
 		if (KamataEngine::Update())
@@ -33,7 +35,9 @@ int WINAPI WinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPSTR, _In_ int) {
 
 		imGuiManager->Begin();
 
-		if (titleScene->IsendTitleScene())
+		
+
+		if (isEndTitleScene)
 			gameScene->Update();
 		else
 			titleScene->Update();
@@ -42,10 +46,13 @@ int WINAPI WinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPSTR, _In_ int) {
 		
 		dxCommon->PreDraw();
 
-		if (titleScene->IsendTitleScene())
+		if (isEndTitleScene)
 			gameScene->Draw();
 		else
 			titleScene->Draw();
+
+		if (titleScene->IsendTitleScene())
+			isEndTitleScene = true;
 
 		imGuiManager->Draw();
 

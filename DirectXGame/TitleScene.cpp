@@ -46,12 +46,15 @@ void TitleScene::Update() {
 	globalSpriteManager.SetSpritePosition(TitleBGSubSpriteId, titleBGSecondspriteNewPos);
 
 	isStart = true;
+#ifdef _DEBUG
+
 
 	ImGui::Begin("Title");
 	ImGui::DragFloat("scrollSpeed", &scrollSpeed, 0.01f);
 	ImGui::DragFloat2("SpritePos", &titleBGspriteNewPos.x, 0.01f);
 	ImGui::DragFloat2("subSpritePos", &titleBGSecondspriteNewPos.x, 0.01f);
 	ImGui::End();
+#endif // _DEBUG
 
 	if (Input::GetInstance()->PushKey(DIK_SPACE))
 		endTitleScene = true;
