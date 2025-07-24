@@ -44,7 +44,7 @@ void Player::Update() {
 
 	// 各桁の数字を抽出
 	int tempNum = num;
-	for (int i = 0; i < 5; i++) {
+	for (int i = 0; i < 4; i++) {
 		// 現在の桁の数字を取得 (右端から)
 		int digit = tempNum % 10;
 
